@@ -16,7 +16,6 @@ const router = createRouter({
 })
 
 const setupDataListener = () => {
-    debugger
     if(isMicroEnvironment()) {
         (window as any).microApp.addDataListener((data: any) => {
             console.log('来自主应用的数据', data)

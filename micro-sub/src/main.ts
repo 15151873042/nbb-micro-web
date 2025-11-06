@@ -15,7 +15,6 @@ let app: any = null
  * @param props 主应用传递的props
  */
 const mount = (props?: any) => {
-    debugger
     console.log(props)
     app = createApp(App)
     app.use(router)

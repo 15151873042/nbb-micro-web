@@ -1,19 +1,54 @@
 <template>
   <h2>子应用App.vue</h2>
-  <el-button @click="toHome">去home页</el-button>
-  <el-button @click="toAbout">去about页</el-button>
+  <h1>当前主应用路由地址：{{route.path}}</h1>
+  <el-row>
+    <el-col :span="24">
+      <el-button @click="toMainHome">加载主应用home页</el-button>
+      <el-button @click="toMainAbout">加载主应用about页</el-button>
+    </el-col>
+  </el-row>
+  <el-row>
+    <el-col :span="24">
+      <el-button @click="toSubHome">加载子应用home页</el-button>
+      <el-button @click="toSubAbout">加载子应用about页</el-button>
+    </el-col>
+  </el-row>
   <router-view/>
 </template>
 
 <script setup lang="ts">
 import router from "@/router";
+import {notifyMainApp, NotifyType} from "@/utils/micro.ts";
+import {useRoute} from "vue-router";
 
-const toHome = () => {
+const route = useRoute()
+
+const toSubHome = () => {
   router.push('/home')
 }
-const toAbout = () => {
+const toSubAbout = () => {
   router.push('/about')
 }
+const toMainHome = () => {
+
+notifyMainApp(NotifyType.route_change, {
+  path: '/home',
+  query: {
+    id: '123'
+  }
+})
+}
+const toMainAbout = () => {
+
+  notifyMainApp(NotifyType.route_change, {
+    path: '/about',
+    query: {
+      id: '123'
+    }
+  })
+
+}
+
 </script>
 
 <style scoped></style>

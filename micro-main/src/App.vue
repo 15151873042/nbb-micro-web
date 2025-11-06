@@ -1,43 +1,61 @@
 <template>
   <h1>父应用App.vue</h1>
-  <el-button @click="toHome">去home页</el-button>
-  <el-button @click="toAbout">去about页</el-button>
+  <h1>当前主应用路由地址：{{route.path}}</h1>
+  <el-row>
+    <el-col>
+      <el-button @click="toHome">加载主应用home页</el-button>
+      <el-button @click="toAbout">加载主应用about页</el-button>
+    </el-col>
+  </el-row>
+  <el-row>
+    <el-col>
+      <el-button @click="toSubHome">加载子应用home页</el-button>
+      <el-button @click="toSubAbout">加载子应用about页</el-button>
+    </el-col>
+  </el-row>
   <router-view/>
-  <el-button @click="loadSubApp = true">加载子应用</el-button>
-  <el-button @click="loadSubApp = false">卸载子应用</el-button>
+
 
   <h1>-----------------------------------------------</h1>
-<!--   name：应用名称, url：应用地址-->
-<!--  注意此处data属性必须是一个普通对象，不能是一个ref对象，当对象属性值发生变化时，会自动发送数据给子应用 -->
-  <micro-app
-      v-if="loadSubApp"
-      name='nbb-sub'
-      url='http://localhost:4001/'
-      :data="{abc: dataKey}"
-      disable-memory-router
-      disable-patch-request
-      iframe></micro-app>
+  <nbb-sub-app1-view/>
 </template>
 
 <script setup lang="ts">
 
-import {ref} from "vue";
 import router from "@/router";
+import {useRoute} from 'vue-router'
 
-const loadSubApp = ref(true)
+import microApp from '@micro-zoe/micro-app'
+import NbbSubApp1View from "@/views/NbbSubApp1View.vue";
 
-const dataKey = ref(0);
-
+const route = useRoute()
 
 const toHome = () => {
-  router.push({
-    path: '/home',
-  })
-  dataKey.value ++
+  router.push({path: '/home'})
 }
+
 const toAbout = () => {
   router.push('/about')
 }
+
+// 加载子应用home页
+const toSubHome = () => {
+  // dataKey.value++
+  microApp.router.push({name: 'nbb-sub-app1', path: '/home'});
+}
+
+// 加载子应用about页
+const toSubAbout = () => {
+  // dataKey.value++
+  microApp.router.push({name: 'nbb-sub-app1', path: '/about'})
+}
+
+// 监听所有子应用的路由变化
+microApp.router.beforeEach((to, from, appName) => {
+  console.log('全局前置守卫 beforeEach: ', to, from, appName)
+})
+
+
 
 </script>
 
