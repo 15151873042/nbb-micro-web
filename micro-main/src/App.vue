@@ -31,23 +31,23 @@ import NbbSubApp1View from "@/views/NbbSubApp1View.vue";
 const route = useRoute()
 
 const toHome = () => {
-  router.push({path: '/home'})
+  router.push({path: '/main/home'})
 }
 
 const toAbout = () => {
-  router.push('/about')
+  router.push({path: '/main/about'})
 }
 
 // 加载子应用home页
 const toSubHome = () => {
   // dataKey.value++
-  microApp.router.push({name: 'nbb-sub-app1', path: '/home'});
+  microApp.router.push({name: 'nbb-sub-app1', path: '/sub1/home'});
 }
 
 // 加载子应用about页
 const toSubAbout = () => {
   // dataKey.value++
-  microApp.router.push({name: 'nbb-sub-app1', path: '/about'})
+  microApp.router.push({name: 'nbb-sub-app1', path: '/sub1/about'})
 }
 
 // 监听所有子应用的路由变化

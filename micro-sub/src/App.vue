@@ -1,6 +1,6 @@
 <template>
   <h2>子应用App.vue</h2>
-  <h1>当前主应用路由地址：{{route.path}}</h1>
+  <h1>当前子应用路由地址：{{route.path}}</h1>
   <el-row>
     <el-col :span="24">
       <el-button @click="toMainHome">加载主应用home页</el-button>
@@ -24,15 +24,15 @@ import {useRoute} from "vue-router";
 const route = useRoute()
 
 const toSubHome = () => {
-  router.push('/home')
+  router.push({path: '/sub1/home'})
 }
 const toSubAbout = () => {
-  router.push('/about')
+  router.push({path: '/sub1/about'})
 }
 const toMainHome = () => {
 
 notifyMainApp(NotifyType.route_change, {
-  path: '/home',
+  path: '/main/home',
   query: {
     id: '123'
   }
@@ -41,7 +41,7 @@ notifyMainApp(NotifyType.route_change, {
 const toMainAbout = () => {
 
   notifyMainApp(NotifyType.route_change, {
-    path: '/about',
+    path: '/main/about',
     query: {
       id: '123'
     }
